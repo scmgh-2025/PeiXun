@@ -60,7 +60,7 @@ const SectionTitle = ({ children, subtitle }: { children: React.ReactNode; subti
   </div>
 );
 
-const PhoneMockup = ({ color = "blue", imageSrc = "/0.1.jpg" }: { color?: string; imageSrc?: string }) => (
+const PhoneMockup = ({ color = "blue", imageSrc = "./0.1.jpg" }: { color?: string; imageSrc?: string }) => (
   <div className="relative mx-auto border-slate-900 bg-slate-900 border-[8px] rounded-[2.5rem] h-[400px] w-[200px] shadow-2xl">
     <div className="h-[25px] w-[2px] bg-slate-900 absolute -start-[10px] top-[72px] rounded-s-lg"></div>
     <div className="h-[35px] w-[2px] bg-slate-900 absolute -start-[10px] top-[104px] rounded-s-lg"></div>
@@ -72,7 +72,7 @@ const PhoneMockup = ({ color = "blue", imageSrc = "/0.1.jpg" }: { color?: string
   </div>
 );
 
-const TabletMockup = ({ color = "slate", imageSrc = "/0.3.jpg" }: { color?: string; imageSrc?: string }) => (
+const TabletMockup = ({ color = "slate", imageSrc = "./0.3.jpg" }: { color?: string; imageSrc?: string }) => (
   <div className="relative mx-auto border-slate-900 bg-slate-900 border-[10px] rounded-[2rem] h-[320px] w-full max-w-[550px] shadow-2xl transition-all duration-500">
     <div className="rounded-[1.5rem] overflow-hidden w-full h-full bg-white relative">
       <img src={imageSrc} alt="PC管理端界面" className="w-full h-full object-cover" />
@@ -146,7 +146,7 @@ const DetailedInfoItem = ({ icon: Icon, title, color, audience, modules, future,
             <div className={`mt-8 p-5 rounded-xl bg-slate-50 border-l-4 border-${color}-400`}>
               <p className="text-slate-600 text-base leading-relaxed flex gap-2">
                 <span className="shrink-0 text-base">🚀</span>
-                <span><strong className="text-slate-700">演进方向：</strong>{displayData.future}</span>
+                <span><strong className="text-slate-700">迭代方向：</strong>{displayData.future}</span>
               </p>
             </div>
           )}
@@ -530,7 +530,7 @@ export default function App() {
               opacity: [0.3, 0.4, 0.3]
             }}
             transition={{ duration: 10, repeat: Infinity }}
-            className="w-full h-full bg-[url('/hero-bg.jpg')] bg-cover bg-center"
+            className="w-full h-full bg-[url('./hero-bg.jpg')] bg-cover bg-center"
           />
         </div>
         
@@ -662,7 +662,7 @@ export default function App() {
                 color: "blue", 
                 audience: "酒店入住宾客",
                 isPhone: true,
-                phoneImage: "/0.1.jpg",
+                phoneImage: "./0.1.jpg",
                 modules: [
                   { name: "智能问答", content: "支持住客通过自然语言交互，便捷完成酒店信息查询与客房服务预约。" },
                   { name: "客房服务", content: "住客可通过智能体一键下单，让客房服务像点外卖一样简单，提升服务效率与顾客体验。" },
@@ -678,7 +678,7 @@ export default function App() {
                 color: "indigo", 
                 audience: "酒店管理人员、酒店老板",
                 isPhone: true,
-                phoneImage: "/0.2.jpg",
+                phoneImage: "./0.2.jpg",
                 modules: [
                   { name: "工单与服务管理", content: "集成客房工单处置、吐槽内容反馈、行李寄存、订单扫码核销等功能，实现便捷处理" },
                   { name: "订单与交易管理", content: "支持订房订单、零售订单、服务订单的快捷移动端处理。" },
@@ -734,39 +734,39 @@ export default function App() {
             <BenefitBlock 
               icon={ShieldCheck}
               title="更省心"
-              subtitle="解放人力，高效服务"
+              subtitle="快速响应分流压力、对话智能下单、人力解放减负"
               color="blue"
-              imageSrc="/0.4.jpg"
+              imageSrc="./0.4.jpg"
               items={[
-                "旺季前台 Wi-Fi、早餐、设施使用等高频咨询，智能体秒级响应、自动分流，省去人工反复接听。",
-                "住客送物、报修等需求可线上对话下单，系统自动派单、进度可查，流程透明、响应提速。",
-                "减轻前台及服务人员工作压力，将人力从重复事务中释放，专注做个性化服务。"
+                "旺季前台高频咨询（Wi-Fi、早餐、设施使用等），智能体秒级响应、自动分流，无需反复接打电话。",
+                "住客送物、报修等需求，对话即可下单，系统自动派单、进度可查，流程透明、响应更快。",
+                "大幅减轻前台与服务人员压力，把人力从重复事务中解放，专注个性化服务。"
               ]}
             />
 
             <BenefitBlock 
               icon={BrainCircuit}
               title="更聪明"
-              subtitle="AI 赋能，体验升级"
+              subtitle="行程科学定制、本地一键推荐、暖心温度陪伴、驱动运营优化"
               color="indigo"
-              imageSrc="/0.5.jpg"
+              imageSrc="./0.5.jpg"
               items={[
-                "精准规划行程：依据住客时间、游玩偏好，智能定制贵阳游玩路线。",
-                "本地智能推荐：一键推送周边美食、景点及小众玩法，贴心地道。",
-                "暖心陪伴服务：提供深夜助眠、亲子故事、情绪陪伴，提升入住体验，拉高好评与复购率。",
-                "老板决策服务：提供竞价分析助手、数据看板等，让老板一键了解酒店运营情况"
+                "精准行程规划：住客想在贵阳多玩两天，智能体结合时间、偏好，科学定制路线。",
+                "本地智能推荐：周边美食、景点、小众玩法一键推送，地道又贴心。",
+                "暖心陪伴服务：深夜助眠、亲子讲故事、情绪陪伴，让酒店服务更有温度，住客体验直接拉满，好评率、复购率自然暴涨。",
+                "老板端：洞悉客户喜好，精准把握客人核心需求；数据分析高频问题，一键优化酒店服务。"
               ]}
             />
 
             <BenefitBlock 
               icon={TrendingUp}
               title="更赚钱"
-              subtitle="供应链赋能，多元增收"
+              subtitle="全域旅游接入、自有商品上架、住游购一体化增收"
               color="yellow"
-              imageSrc="/0.6.jpg"
+              imageSrc="./0.6.jpg"
               items={[
-                "联合官方搭建全域旅游供应链，接入景区门票、精品游玩线路、本地特产等资源。",
-                "支持酒店自有商品上架，适配各类客群，拓展营收渠道，实现住、游、购一体化增收。"
+                "与官方联合打造全域旅游供应链，接入热门景区门票、精品线路、本地特产等资源。",
+                "支持自有商品上架，灵活适配客群，拓展营收渠道，实现'住+游+购'一体化增收。"
               ]}
             />
           </div>
