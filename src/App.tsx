@@ -650,16 +650,7 @@ export default function App() {
           >
             酒店智能体培训
           </motion.h1>
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="flex flex-wrap justify-center gap-4"
-          >
-            <a href="#part1" className="px-10 py-4 bg-blue-500 text-white rounded-full font-bold text-lg hover:bg-blue-600 transition-colors shadow-lg">产品介绍</a>
-            <a href="#part2" className="px-10 py-4 bg-blue-600 text-white rounded-full font-bold text-lg hover:bg-blue-700 transition-colors shadow-lg">SOP流程</a>
-            <a href="#part3" className="px-10 py-4 bg-blue-700 text-white rounded-full font-bold text-lg hover:bg-blue-800 transition-colors shadow-lg">考核指标</a>
-          </motion.div>
+
         </div>
       </header>
 
