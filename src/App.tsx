@@ -217,8 +217,8 @@ const TableOfContents = () => {
     { id: 'step-1', label: 'Step 1', subtitle: '获客与建联', indent: true },
     { id: 'step-2', label: 'Step 2', subtitle: '上门演示与签约', indent: true },
     { id: 'step-3', label: 'Step 3', subtitle: '签约后酒店入驻', indent: true },
-    { id: 'step-4', label: 'Step 4', subtitle: '系统测试', indent: true },
-    { id: 'step-5', label: 'Step 5', subtitle: '物料确认', indent: true },
+    { id: 'step-4', label: 'Step 4', subtitle: '物料确认', indent: true },
+    { id: 'step-5', label: 'Step 5', subtitle: '系统测试', indent: true },
     { id: 'step-6', label: 'Step 6', subtitle: '现场部署与员工培训', indent: true },
     { id: 'step-7', label: 'Step 7', subtitle: '日常维护与运营', indent: true },
     { id: 'step-8', label: 'Step 8', subtitle: '续费支持与交接', indent: true },
@@ -945,18 +945,6 @@ export default function App() {
 
             <StepCard 
               number="4"
-              title="系统测试"
-              tasks={[
-                { name: "系统测试", content: "确认AI问答无误; " },
-                { name: "对接验收", content: "与对接人共同验证功能完整性、问答准确性,交付酒店验收通过。生成酒店及房间专属二维码。" }
-              ]}
-              goals={[
-                "确认系统功能正常，确保酒店验收通过，交付质量达标"
-              ]}
-            />
-
-            <StepCard 
-              number="5"
               title="物料确认"
               tasks={[
                 { name: "需求确认", content: "了解酒店物料摆放需求，确认物料数量及规格, 对接物料组，开始物料制作。" },
@@ -973,10 +961,23 @@ export default function App() {
             />
 
             <StepCard 
+              number="5"
+              title="系统测试"
+              tasks={[
+                { name: "系统测试", content: "确认AI问答无误; " },
+                { name: "对接验收", content: "与对接人共同验证功能完整性、问答准确性,交付酒店验收通过。生成酒店及房间专属二维码。" }
+              ]}
+              goals={[
+                "确认系统功能正常，确保酒店验收通过，交付质量达标"
+              ]}
+            />
+
+            <StepCard 
               number="6"
               title="物料部署与员工培训"
               tasks={[
-                { name: "物料部署", content: "预约非高峰期, 易拉宝放置于前台旁/大堂显目处, 房间桌牌二维码朝向客人视线方向, 拍照确认。" }
+                { name: "物料检查", content: "若物料邮寄至酒店，预约到店时间检查物料并同步开展培训；若邮寄至服务人员处，先检查印刷质量，再请酒店对接人确认效果，避免二次修改。最后预约到店培训并完成物料部署。" },
+                { name: "物料部署", content: "预约非高峰期, 易拉宝和前台二维码放置于前台旁/大堂显目处, 房间桌牌二维码朝向客人视线方向, 拍照确认。" }
               ]}
               goals={[
                 "确保物料正确摆放提升可见度, 员工熟练操作减少使用障碍, 接入供应链开启增收"
