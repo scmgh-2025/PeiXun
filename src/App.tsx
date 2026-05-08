@@ -72,13 +72,25 @@ const PhoneMockup = ({ color = "blue", imageSrc = "./0.1.jpg" }: { color?: strin
   </div>
 );
 
-const TabletMockup = ({ color = "slate", imageSrc = "./0.3.jpg" }: { color?: string; imageSrc?: string }) => (
-  <div className="relative mx-auto border-slate-900 bg-slate-900 border-[10px] rounded-[2rem] h-[320px] w-full max-w-[550px] shadow-2xl transition-all duration-500">
-    <div className="rounded-[1.5rem] overflow-hidden w-full h-full bg-white relative">
-      <img src={imageSrc} alt="PC管理端界面" className="w-full h-full object-cover" />
+const TabletMockup = ({ color = "slate", imageSrc = "./0.3.jpg" }: { color?: string; imageSrc?: string }) => {
+  const [currentImage, setCurrentImage] = React.useState(0);
+  const images = [imageSrc, "https://imagetourl.cloud/emzngdd9.png"];
+  
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+  
+  return (
+    <div className="relative mx-auto border-slate-900 bg-slate-900 border-[10px] rounded-[2rem] h-[320px] w-full max-w-[550px] shadow-2xl transition-all duration-500">
+      <div className="rounded-[1.5rem] overflow-hidden w-full h-full bg-white relative">
+        <img src={images[currentImage]} alt="PC管理端界面" className="w-full h-full object-cover" />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const DetailedInfoItem = ({ icon: Icon, title, color, audience, modules, future, isPhone, tabs, phoneImage }: any) => {
   const [activeTab, setActiveTab] = React.useState(0);
