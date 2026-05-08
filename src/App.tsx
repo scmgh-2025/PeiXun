@@ -530,7 +530,7 @@ export default function App() {
               opacity: [0.3, 0.5, 0.3]
             }}
             transition={{ duration: 10, repeat: Infinity }}
-            className="w-full h-full bg-[url('./hero-bg.jpg')] bg-cover bg-center"
+            className="w-full h-full bg-[url('./hero-bg-new.png')] bg-cover bg-center"
           />
         </div>
         
