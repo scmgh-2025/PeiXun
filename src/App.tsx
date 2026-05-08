@@ -527,7 +527,7 @@ export default function App() {
           <motion.div 
             animate={{ 
               scale: [1, 1.1, 1],
-              opacity: [0.3, 0.4, 0.3]
+              opacity: [0.3, 0.5, 0.3]
             }}
             transition={{ duration: 10, repeat: Infinity }}
             className="w-full h-full bg-[url('./hero-bg.jpg')] bg-cover bg-center"
@@ -846,49 +846,25 @@ export default function App() {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8 mb-24">
-            <div className="lg:col-span-1 bg-blue-600 text-white p-10 rounded-3xl">
-              <h3 className="text-xl md:text-2xl font-bold mb-6 tracking-tight">目标与范围</h3>
-              <div className="space-y-6">
-                <div>
-                  <h4 className="text-blue-200 text-sm font-semibold uppercase tracking-wider mb-2 font-mono">目标 / Goal</h4>
-                  <p className="text-blue-50 leading-relaxed text-base">
+            <div className="lg:col-span-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white p-10 rounded-3xl shadow-lg">
+              <h3 className="text-2xl md:text-3xl font-bold mb-8 tracking-tight">目标与范围</h3>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                  <h4 className="text-blue-100 text-sm font-semibold uppercase tracking-wider mb-3 font-mono">目标 / Goal</h4>
+                  <p className="text-white leading-relaxed text-base">
                     规范酒店智能体从市场拓展到持续运营的全生命周期管理流程，明确运营角色的职责、协作节点与交付标准，提升酒店合作签约率、部署效率、客户满意度及长期续签率。
                   </p>
                 </div>
-                <div>
-                  <h4 className="text-blue-200 text-sm font-semibold uppercase tracking-wider mb-2 font-mono">适用范围 / Scope</h4>
-                  <p className="text-blue-50 leading-relaxed text-base">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                  <h4 className="text-blue-100 text-sm font-semibold uppercase tracking-wider mb-3 font-mono">适用范围 / Scope</h4>
+                  <p className="text-white leading-relaxed text-base">
                     本流程适用于公司内部所有参与酒店智能体服务的人员。
                   </p>
                 </div>
               </div>
             </div>
             
-            <div className="lg:col-span-2 bg-white p-10 rounded-3xl border border-slate-100 shadow-sm">
-              <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-8 flex items-center gap-2 tracking-tight">
-                <Users className="text-blue-600" /> 关键交付结果
-              </h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 text-base text-slate-600">
-                {[
-                  "智能体预览版（含专属链接/二维码）",
-                  "酒店合作协议",
-                  "客户信息档案（含对接人及决策人信息）",
-                  "确认酒店入驻成功并建立服务群",
-                  "酒店智能体正式版",
-                  "物料部署记录",
-                  "员工培训记录",
-                  "数据日报",
-                  "日常运维及需求记录",
-                  "回访记录（一家酒店2次/月的拜访频率）",
-                  "续签数据支持"
-                ].map((duty, idx) => (
-                  <div key={idx} className="p-4 bg-slate-50 rounded-xl border border-slate-100 flex items-start gap-3">
-                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />
-                    {duty}
-                  </div>
-                ))}
-              </div>
-            </div>
+
           </div>
 
           <div id="roadmap">
