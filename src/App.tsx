@@ -724,7 +724,7 @@ export default function App() {
               <div className="w-12 h-12 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg shadow-teal-200">
                 <Zap className="text-white" size={24} />
               </div>
-              <span>什么是"黄小西"酒店智能体</span>
+              <span>产品定义</span>
             </h3>
             
             <p className="text-slate-600 text-lg mb-10 relative z-10">
