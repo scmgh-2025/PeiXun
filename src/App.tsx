@@ -219,7 +219,7 @@ const TableOfContents = () => {
     { id: 'step-3', label: 'Step 3', subtitle: '签约后酒店入驻', indent: true },
     { id: 'step-4', label: 'Step 4', subtitle: '物料确认', indent: true },
     { id: 'step-5', label: 'Step 5', subtitle: '系统测试', indent: true },
-    { id: 'step-6', label: 'Step 6', subtitle: '现场部署与员工培训', indent: true },
+    { id: 'step-6', label: 'Step 6', subtitle: '物料部署与员工培训', indent: true },
     { id: 'step-7', label: 'Step 7', subtitle: '日常维护与运营', indent: true },
     { id: 'step-8', label: 'Step 8', subtitle: '续费支持与交接', indent: true },
     { id: 'part3', label: '第三部分', subtitle: '考核指标', isMain: true },
@@ -328,9 +328,8 @@ const StepCard = ({ number, title, tasks, materials, note, trainingDetails, cont
 
       {trainingDetails && (
         <div className="mt-10 pt-10 border-t border-slate-100">
-          <h4 className="font-bold text-slate-400 text-xs uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
-            <div className="w-1 h-3 bg-blue-600 rounded-full" />
-            培训内容 / Training Content
+          <h4 className="font-bold text-slate-900 text-2xl md:text-3xl mb-8 tracking-tight">
+            员工培训
           </h4>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {trainingDetails.map((section: any, idx: number) => (
