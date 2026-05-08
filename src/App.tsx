@@ -30,7 +30,8 @@ import {
   AlertCircle,
   Menu,
   BookOpen,
-  ArrowUp
+  ArrowUp,
+  Lightbulb
 } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -221,59 +222,7 @@ const TableOfContents = () => {
     { id: 'cooperation-steps', label: '合作步骤', subtitle: '', isMain: true },
   ];
 
-  return (
-    <div className="fixed left-0 top-1/2 -translate-y-1/2 z-50 group">
-      {/* Hidden trigger area */}
-      <div className="absolute left-0 top-0 w-4 h-full" />
-      
-      {/* TOC Container - hidden by default, shown on hover */}
-      <div className="flex items-start -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out">
-        {/* Toggle Button (visible when TOC is hidden) */}
-        <div className="absolute left-full top-1/2 -translate-y-1/2 p-3 bg-white shadow-lg rounded-r-xl border border-l-0 border-slate-200 cursor-pointer group-hover:opacity-0 transition-opacity">
-          <Menu size={20} className="text-slate-600" />
-        </div>
-        
-        {/* TOC Content */}
-        <div className="bg-white/95 backdrop-blur-md shadow-xl border-r border-slate-200 py-6 px-4 w-64 max-h-[80vh] overflow-y-auto">
-          <div className="flex items-center gap-2 mb-6 px-2">
-            <BookOpen size={18} className="text-blue-600" />
-            <span className="font-bold text-slate-800 text-sm">目录导航</span>
-          </div>
-          
-          <nav className="space-y-1">
-            {tocItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`w-full text-left rounded-lg transition-all duration-200 ${
-                  item.indent ? 'pl-6 pr-3 py-2 text-xs' : 'px-3 py-2.5 text-sm'
-                } ${
-                  activeSection === item.id
-                    ? item.isMain
-                      ? 'bg-blue-100 text-blue-800 font-bold'
-                      : 'bg-blue-50 text-blue-700 font-semibold'
-                    : item.isMain
-                      ? 'text-slate-800 font-semibold hover:bg-slate-100'
-                      : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
-                }`}
-              >
-                <div className="flex flex-col">
-                  <span className={item.isMain ? 'font-bold' : item.indent ? 'font-medium' : 'font-medium'}>
-                    {item.label}
-                  </span>
-                  {item.subtitle && (
-                    <span className={`opacity-70 mt-0.5 ${item.indent ? 'text-[10px]' : 'text-xs'}`}>
-                      {item.subtitle}
-                    </span>
-                  )}
-                </div>
-              </button>
-            ))}
-          </nav>
-        </div>
-      </div>
-    </div>
-  );
+  return null;
 };
 
 const StepCard = ({ number, title, tasks, materials, note, trainingDetails, contact, materialTasks }: any) => (
@@ -569,46 +518,33 @@ export default function App() {
   const [showStepNav, setShowStepNav] = useState(false);
 
   useEffect(() => {
-    // 监听Step 2-8，当任一进入视口时显示导航
-    const stepIds = ['step-2', 'step-3', 'step-4', 'step-5', 'step-6', 'step-7', 'step-8'];
-    
-    const showObserver = new IntersectionObserver(
-      (entries) => {
-        const isAnyStepVisible = entries.some((entry) => entry.isIntersecting);
-        if (isAnyStepVisible) {
-          setShowStepNav(true);
-        }
-      },
-      { rootMargin: '-10% 0px -10% 0px' }
-    );
-
-    stepIds.forEach((id) => {
-      const section = document.getElementById(id);
-      if (section) {
-        showObserver.observe(section);
+    // 只使用scroll事件来控制导航显示，避免与IntersectionObserver冲突
+    const handleScroll = () => {
+      const step1Section = document.getElementById('step-1');
+      const step8Section = document.getElementById('step-8');
+      
+      if (step1Section && step8Section) {
+        const step1Rect = step1Section.getBoundingClientRect();
+        const step8Rect = step8Section.getBoundingClientRect();
+        
+        // 检查是否在Step 1到Step 8的范围内
+        // Step 1顶部进入视口底部时为true
+        const isAfterStep1Start = step1Rect.top < window.innerHeight;
+        // Step 8底部离开视口顶部时为false
+        const isBeforeStep8End = step8Rect.bottom > 0;
+        
+        // 当在Step 1-8范围内时显示导航
+        setShowStepNav(isAfterStep1Start && isBeforeStep8End);
       }
-    });
+    };
 
-    // 监听Step 1，当它进入视口时隐藏导航
-    const hideObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.target.id === 'step-1' && entry.isIntersecting) {
-            setShowStepNav(false);
-          }
-        });
-      },
-      { rootMargin: '-10% 0px -10% 0px' }
-    );
-
-    const step1Section = document.getElementById('step-1');
-    if (step1Section) {
-      hideObserver.observe(step1Section);
-    }
+    // 初始检查
+    handleScroll();
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
-      showObserver.disconnect();
-      hideObserver.disconnect();
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -733,18 +669,27 @@ export default function App() {
             
             <div className="grid md:grid-cols-3 gap-6 relative z-10">
               <div className="bg-white rounded-2xl p-7 shadow-md border border-teal-100 hover:shadow-xl hover:-translate-y-1 transition-all">
-                <div className="w-10 h-10 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-lg mb-5 shadow-lg shadow-teal-200">1</div>
-                <p className="text-base leading-relaxed text-slate-700">是<span className="text-emerald-600 font-semibold">服务好住客</span>的AI工具，为酒店配备24小时服务的智能体团队</p>
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-teal-200 shrink-0">1</div>
+                  <h4 className="text-lg font-bold text-slate-900">服务好住客</h4>
+                </div>
+                <p className="text-base leading-relaxed text-slate-700">为酒店配备24小时服务的智能体团队</p>
               </div>
               
               <div className="bg-white rounded-2xl p-7 shadow-md border border-teal-100 hover:shadow-xl hover:-translate-y-1 transition-all">
-                <div className="w-10 h-10 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-lg mb-5 shadow-lg shadow-teal-200">2</div>
-                <p className="text-base leading-relaxed text-slate-700">是<span className="text-emerald-600 font-semibold">管理好酒店</span>的AI工具，为酒店配备24小时的数字员工</p>
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-teal-200 shrink-0">2</div>
+                  <h4 className="text-lg font-bold text-slate-900">管理好酒店</h4>
+                </div>
+                <p className="text-base leading-relaxed text-slate-700">为酒店配备24小时的数字员工</p>
               </div>
               
               <div className="bg-white rounded-2xl p-7 shadow-md border border-teal-100 hover:shadow-xl hover:-translate-y-1 transition-all">
-                <div className="w-10 h-10 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-lg mb-5 shadow-lg shadow-teal-200">3</div>
-                <p className="text-base leading-relaxed text-slate-700">是<span className="text-emerald-600 font-semibold">更赚钱</span>的AI工具，为酒店提供AI时代的流量入口</p>
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-teal-200 shrink-0">3</div>
+                  <h4 className="text-lg font-bold text-slate-900">增加收入</h4>
+                </div>
+                <p className="text-base leading-relaxed text-slate-700">为酒店提供AI时代的流量入口</p>
               </div>
             </div>
             
@@ -836,6 +781,36 @@ export default function App() {
             ))}
           </div>
 
+          {/* 额外支持 */}
+          <div className="mt-24 mb-16">
+            <h3 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-8 tracking-tight text-center">额外支持</h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-white rounded-2xl p-8 shadow-md border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all">
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
+                    <Package className="text-white" size={24} />
+                  </div>
+                  <h4 className="text-xl font-bold text-slate-900">一套落地部署物料</h4>
+                </div>
+                <p className="text-slate-600 text-base leading-relaxed">
+                  多元化主题配置，标准化前台台卡、客房扫码签及易拉宝等全链路线下视觉交付，引导私域转化。
+                </p>
+              </div>
+              
+              <div className="bg-white rounded-2xl p-8 shadow-md border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all">
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-amber-200">
+                    <Lightbulb className="text-white" size={24} />
+                  </div>
+                  <h4 className="text-xl font-bold text-slate-900">一套新型运营方法</h4>
+                </div>
+                <p className="text-slate-600 text-base leading-relaxed">
+                  打造酒店专属智能门户，抢占AI时代入口；联动高德、阿里等平台及热门IP，构建引流矩阵。
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* Block 3: Benefits */}
           <div id="benefits">
             <SectionTitle subtitle="赋能酒店经营效益升级">三大核心赋能价值</SectionTitle>
@@ -871,12 +846,12 @@ export default function App() {
             <BenefitBlock 
               icon={TrendingUp}
               title="更赚钱"
-              subtitle="全域旅游接入、自有商品上架、住游购一体化增收"
+              subtitle="一键对接优质旅游资源，增收提利，从单一住宿业态升级为全域旅游综合服务商"
               color="yellow"
               imageSrc="./0.6.jpg"
               items={[
                 "与官方联合打造全域旅游供应链，接入热门景区门票、精品线路、本地特产等资源。",
-                "一键对接优质旅游资源，增收提利，从单一住宿业态升级为全域旅游综合服务商"
+                "支持自有商品上架，拓展营收渠道，实现'住+游+购'一体化增收"
               ]}
             />
           </div>
@@ -944,6 +919,37 @@ export default function App() {
             ].map((hotel, i) => (
               <HotelDataCard key={i} {...hotel} name={hotel.nameFull || hotel.name} />
             ))}
+          </div>
+        </section>
+
+        {/* 合作步骤 */}
+        <section id="cooperation-steps" className="py-20 bg-slate-50 border-t border-slate-100 mb-16">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="text-center mb-16">
+              <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-8 tracking-tight">
+                合作步骤
+              </h3>
+              
+              <div className="flex flex-wrap justify-center items-center gap-6">
+                {[
+                  "签订协议", "明确对接人", "建立服务群", "完成注册", "部署物料", "员工培训", "正式启用"
+                ].map((step, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="flex flex-col items-center gap-4"
+                  >
+                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-white flex items-center justify-center font-bold shadow-xl shadow-blue-200/60 border-2 border-white">
+                      {idx + 1}
+                    </div>
+                    <span className="text-slate-700 text-base font-semibold">{step}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1089,7 +1095,7 @@ export default function App() {
               title="获客与建联"
               tasks={[
                 { name: "信息来源渠道", content: "政府部门: 对接文旅/公安/商务公开名录, 通过宣贯宣讲直接触达;\n渠道方: 与航信、紫楠、各行业协会合作批量获取名单;\n旅行社: 获取本地存量合作酒店资源。" },
-                { name: "联系见面动作", content: "简要介绍：清晰传递智能体的服务价值，说明可帮助酒店承接高频咨询、提升运营效率等效果，让对方快速了解核心优势。\n\n拜访安排：预约上门尽量避开酒店的高峰时段，并准备好折页、PPT等宣传物料。\n\n前置铺垫：正式拜访前向对方发送官网、公众号帮助对方提前建立认知。" }
+                { name: "联系见面动作", content: "简要介绍：清晰传递智能体的服务价值，说明可帮助酒店承接高频咨询、提升运营效率等效果，让对方快速了解核心优势。\n\n预约拜访：预约上门尽量避开酒店的高峰时段（早高峰8:00-10:00、退房时段12:00-14:00），并准备好纸质协议、宣传折页、PPT等宣传物料。\n\n前置铺垫：正式拜访前向对方发送官网、公众号帮助对方提前建立认知。" }
               ]}
               goals={[
                 "多渠道获取精准酒店客户名单，扩大潜在客户覆盖面",
@@ -1102,16 +1108,17 @@ export default function App() {
                 "《酒店智能体宣传折页》",
                 "酒店智能体宣传介绍 PPT",
                 "产品介绍网页",
-                "公众号：'黄小西'酒店智能体"
+                "公众号：'黄小西'酒店智能体",
+                "合作协议"
               ]}
-              contact="材料联系人：运营中心 宋橙铭"
+              contact="材料联系人：运营中心 宋橙铭、周洋"
             />
 
             <StepCard 
               number="2"
               title="上门演示与签约"
               tasks={[
-                { name: "演示准备", content: "准备调试好的笔记本、宣传材料、运营数据网页及电子/纸质协议模板。" },
+                { name: "演示准备", content: "准备调试好的笔记本、宣传材料、网页及电子/纸质协议模板。" },
                 { name: "现场宣贯与签约", content: "1.明确对接人为老板、投资人、经理、店长等有决策权的酒店人员;\n2.为酒店对接人详细介绍酒店智能体并可进行演示;\n3.达成签约，完成合同签署并拍照存档，同时完整记录酒店对接人联系方式。" }
               ]}
               goals={[
@@ -1134,9 +1141,9 @@ export default function App() {
               title="签约后酒店入驻"
               tasks={[
                 { name: "注册", content: "辅助酒店扫码完成系统入驻注册；\n录入酒店基础信息、推荐人、营业执照等资料；\n记录对接人及决策人联系方式，并分配账号权限。" },
-                { name: "拉群", content: "创建微信群(群名:'XX酒店智能体服务群');\n群内成员须包括:酒店服务人员、酒店智能体客服、酒店对接人。" },
+                { name: "拉群", content: "创建微信群(群名:'XX酒店智能体服务群');\n群内成员须包括:酒店服务人员、酒店智能体客服1、酒店智能体客服2、酒店对接人" },
                 { name: "建立客户档案", content: "每一步客户服务流程完成后，在指定系统中同步更新客户档案内容。" },
-                { name: "收集知识库", content: "完成知识库录入，在指定系统中更新知识库状态。" }
+                { name: "收集知识库和酒店服务内容", content: "完成知识库录入，配置酒店服务内容，在指定系统中更新知识库状态。" }
               ]}
               goals={[
                 "建立结构化客户档案，确保运营流程按既定步骤落实"
@@ -1159,7 +1166,10 @@ export default function App() {
                 "明确规格与设计要求，避免返工; 把控质量确保客户确认无误"
               ]}
               materials={[
-                "指定系统"
+                "指定系统",
+                "住客端小程序",
+                "手机管理端小程序",
+                "酒店智能体管理后台"
               ]}
               note={`完善知识库后，记得在指定系统中更新状态，选择好物料类型，物料组根据知识库状态制作物料。`}
               contact="物料组联系人：熊薇、熊欢平"
@@ -1175,8 +1185,8 @@ export default function App() {
               goals={[
                 "确认系统功能正常，确保酒店验收通过，交付质量达标"
               ]}
-              note="如有BUG需要修复，请在“酒店上线运维群”中联系技术人员。"
-              contact="酒店上线运维群联系人：马文、王园"
+              note="如有BUG需要修复,请在 酒店上线运维群 中联系产品原型组的同事"
+              contact="酒店上线运维群联系人:刘鑫、黄维维、刘锐奇、邓思韵"
             />
 
             <StepCard 
@@ -1184,14 +1194,18 @@ export default function App() {
               title="物料部署与员工培训"
               tasks={[]}
               materialTasks={[
-                { name: "物料检查与时间预约", content: "若物料邮寄至酒店，预约到店时间检查物料并同步开展培训；若邮寄至服务人员处，先检查印刷质量，再请酒店对接人确认效果，避免二次修改。最后预约到店培训并完成物料部署。" },
-                { name: "现场部署", content: "易拉宝和前台二维码放置于前台旁/大堂显目处，房间桌牌二维码朝向客人视线方向，拍照留底。" }
+                { name: "预约时间", content: "若物料邮寄至酒店，预约到店时间同步检查物料并开展培训；若邮寄至服务人员处，确认效果后预约到店培训并完成部署。" },
+                { name: "现场部署", content: "易拉宝和前台二维码放置于前台旁或大堂显目处，房间桌牌二维码朝向客人视线方向，全部完成后拍照留底。" },
+                { name: "部署确认", content: "部署完成后拍照留底。" }
               ]}
               goals={[
                 "确保物料正确摆放提升可见度, 员工熟练操作减少使用障碍, 接入供应链开启增收"
               ]}
               materials={[
-                "指定系统"
+                "指定系统",
+                "住客端小程序",
+                "手机管理端小程序",
+                "酒店智能体管理后台"
               ]}
               trainingDetails={[
                 {
@@ -1225,7 +1239,6 @@ export default function App() {
                 {
                   title: "四、常见问题处理",
                   items: [
-                    "物料未送达或损坏处理",
                     "门票核销失败响应机制",
                     "白酒发货破损责任划分",
                     "知识库答案纠错流程"
@@ -1270,37 +1283,6 @@ export default function App() {
         </section>
 
       </main>
-
-      {/* 合作步骤 - 页面底部 */}
-      <section id="cooperation-steps" className="py-20 bg-slate-50 border-t border-slate-100">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-8 tracking-tight">
-              合作步骤
-            </h3>
-            
-            <div className="flex flex-wrap justify-center items-center gap-6">
-              {[
-                "签订协议", "指定对接人", "建立服务群", "完成注册", "部署物料", "员工培训", "正式启用"
-              ].map((step, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="flex flex-col items-center gap-4"
-                >
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-white flex items-center justify-center font-bold shadow-xl shadow-blue-200/60 border-2 border-white">
-                    {idx + 1}
-                  </div>
-                  <span className="text-slate-700 text-base font-semibold">{step}</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Footer */}
       <footer className="bg-slate-900 text-white py-12 border-t border-white/5">
