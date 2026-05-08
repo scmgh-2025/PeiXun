@@ -12,3 +12,10 @@ html {
 body {
   font-family: var(--font-sans);
 }
+
+/* Custom hero background class for GitHub Pages */
+.bg-hero {
+  background-image: url('./hero-bg-new.png');
+  background-size: cover;
+  background-position: center;
+}
