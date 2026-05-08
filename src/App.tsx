@@ -29,7 +29,8 @@ import {
   MessageSquareQuote,
   AlertCircle,
   Menu,
-  BookOpen
+  BookOpen,
+  ArrowUp
 } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -117,24 +118,7 @@ const DetailedInfoItem = ({ icon: Icon, title, color, audience, modules, future,
             </div>
           </div>
           
-          {tabs && (
-            <div className="flex flex-wrap gap-2 mb-8 p-1.5 bg-slate-100/80 rounded-2xl w-fit border border-slate-200/50">
-              {tabs.map((tab: any, idx: number) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveTab(idx)}
-                  className={`px-5 py-2.5 text-base font-semibold rounded-xl transition-all cursor-pointer ${
-                    activeTab === idx 
-                      ? `bg-slate-800 text-white shadow-md` 
-                      : 'text-slate-500 hover:text-slate-900 hover:bg-white/50'
-                  }`}
-                >
-                  {tab.title}
-                </button>
-              ))}
-            </div>
-          )}
-          
+
           <div className="grid gap-6">
             {displayData.modules.map((item: any, idx: number) => (
               <motion.div 
@@ -219,13 +203,13 @@ const TableOfContents = () => {
   };
 
   const tocItems = [
-    { id: 'part1', label: '第一部分', subtitle: '酒店智能体介绍', isMain: true },
-    { id: 'background', label: '公司背景', subtitle: '及"黄小西"IP', indent: true },
-    { id: 'product-intro', label: '酒店智能体介绍', subtitle: '产品概念', indent: true },
-    { id: 'benefits', label: '三大核心赋能', subtitle: '赋能价值', indent: true },
-    { id: 'showcases', label: '部分成效展示', subtitle: '成功案例', indent: true },
-    { id: 'part2', label: '第二部分', subtitle: '运营流程标准', isMain: true },
-    { id: 'roadmap', label: '全流程落地图谱', subtitle: '', isMain: true },
+    { id: 'part1', label: '第一部分 / 酒店智能体介绍', subtitle: '', isMain: true },
+    { id: 'background', label: '公司背景及"黄小西"IP', subtitle: '', indent: true },
+    { id: 'product-intro', label: '产品介绍', subtitle: '', indent: true },
+    { id: 'benefits', label: '三大核心赋能价值', subtitle: '', indent: true },
+    { id: 'showcases', label: '部分成效展示', subtitle: '', indent: true },
+    { id: 'part3', label: '第二部分 / 考核指标', subtitle: '', isMain: true },
+    { id: 'part2', label: '第三部分 / 运营流程标准 (SOP)', subtitle: '', isMain: true },
     { id: 'step-1', label: 'Step 1', subtitle: '获客与建联', indent: true },
     { id: 'step-2', label: 'Step 2', subtitle: '上门演示与签约', indent: true },
     { id: 'step-3', label: 'Step 3', subtitle: '签约后酒店入驻', indent: true },
@@ -234,7 +218,7 @@ const TableOfContents = () => {
     { id: 'step-6', label: 'Step 6', subtitle: '物料部署与员工培训', indent: true },
     { id: 'step-7', label: 'Step 7', subtitle: '日常维护与运营', indent: true },
     { id: 'step-8', label: 'Step 8', subtitle: '续费支持与交接', indent: true },
-    { id: 'part3', label: '第三部分', subtitle: '考核指标', isMain: true },
+    { id: 'cooperation-steps', label: '合作步骤', subtitle: '', isMain: true },
   ];
 
   return (
@@ -292,7 +276,7 @@ const TableOfContents = () => {
   );
 };
 
-const StepCard = ({ number, title, tasks, materials, note, trainingDetails, contact }: any) => (
+const StepCard = ({ number, title, tasks, materials, note, trainingDetails, contact, materialTasks }: any) => (
   <motion.div 
     id={`step-${number}`}
     initial={{ opacity: 0, y: 20 }}
@@ -318,46 +302,100 @@ const StepCard = ({ number, title, tasks, materials, note, trainingDetails, cont
       
       <div className="grid lg:grid-cols-1 gap-10">
         {/* Actions */}
-        <div className="space-y-6">
-          <h4 className="font-bold text-slate-400 text-xs uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
-            <div className="w-1 h-3 bg-blue-600 rounded-full" />
-            运营动作 / Actions
-          </h4>
-          <div className="grid gap-4">
-            {tasks.map((task: any, idx: number) => (
-              <div key={idx} className="bg-slate-50/50 p-6 rounded-2xl border border-slate-100/50 hover:bg-white hover:border-blue-200 transition-colors">
-                <div className="font-bold text-slate-900 mb-2 flex items-center gap-2 text-base">
-                   <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                   {task.name}
+        {tasks && tasks.length > 0 && (
+          <div className="space-y-6">
+            <h4 className="font-bold text-slate-400 text-xs uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+              <div className="w-1 h-3 bg-blue-600 rounded-full" />
+              运营动作 / Actions
+            </h4>
+            <div className="grid gap-4">
+              {tasks.map((task: any, idx: number) => (
+                <div key={idx} className="bg-slate-50/50 p-6 rounded-2xl border border-slate-100/50 hover:bg-white hover:border-blue-200 transition-colors">
+                  <div className="font-bold text-slate-900 mb-2 flex items-center gap-2 text-base">
+                     <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                     {task.name}
+                  </div>
+                  <p className="text-slate-500 text-base leading-relaxed whitespace-pre-wrap">{task.content}</p>
                 </div>
-                <p className="text-slate-500 text-base leading-relaxed whitespace-pre-wrap">{task.content}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
         
       </div>
 
       {trainingDetails && (
         <div className="mt-10 pt-10 border-t border-slate-100">
-          <h4 className="font-bold text-slate-900 text-2xl md:text-3xl mb-8 tracking-tight">
-            员工培训
-          </h4>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {trainingDetails.map((section: any, idx: number) => (
-              <div key={idx} className="space-y-4">
-                <div className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-2 flex items-center gap-2 text-blue-600">
-                  {section.title}
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-200">
+              <Package size={20} className="text-white" />
+            </div>
+            <h4 className="font-bold text-slate-900 text-2xl md:text-3xl tracking-tight">
+              物料部署
+            </h4>
+          </div>
+          
+          {materialTasks && (
+            <div className="grid gap-4 mb-8">
+              {materialTasks.map((task: any, idx: number) => (
+                <div key={idx} className="bg-slate-50/50 p-6 rounded-2xl border border-slate-100/50 hover:bg-white hover:border-blue-200 transition-colors">
+                  <div className="font-bold text-slate-900 mb-2 flex items-center gap-2 text-base">
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                    {task.name}
+                  </div>
+                  <p className="text-slate-500 text-base leading-relaxed whitespace-pre-wrap">{task.content}</p>
                 </div>
-                <ul className="space-y-2">
+              ))}
+            </div>
+          )}
+          
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-200">
+              <Users size={20} className="text-white" />
+            </div>
+            <h4 className="font-bold text-slate-900 text-2xl md:text-3xl tracking-tight">
+              员工培训
+            </h4>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {trainingDetails.map((section: any, idx: number) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="bg-slate-50/50 p-6 rounded-2xl border border-slate-100 hover:bg-white hover:shadow-lg hover:border-blue-100 transition-all duration-300"
+              >
+                <div className="flex items-center gap-3 mb-5 pb-4 border-b border-slate-200/60">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold text-white shadow-md ${
+                    idx === 0 ? 'bg-gradient-to-br from-blue-500 to-blue-600 shadow-blue-200' :
+                    idx === 1 ? 'bg-gradient-to-br from-indigo-500 to-indigo-600 shadow-indigo-200' :
+                    idx === 2 ? 'bg-gradient-to-br from-slate-600 to-slate-700 shadow-slate-200' :
+                    'bg-gradient-to-br from-amber-500 to-orange-500 shadow-amber-200'
+                  }`}>
+                    {idx + 1}
+                  </div>
+                  <div className="text-base font-bold text-slate-900">
+                    {section.title}
+                  </div>
+                </div>
+                <ul className="space-y-3">
                   {section.items.map((item: string, i: number) => (
-                    <li key={i} className="text-sm text-slate-500 flex gap-2 leading-relaxed">
-                      <span className="text-blue-400">•</span>
-                      {item}
+                    <li key={i} className="text-sm text-slate-600 flex gap-3 leading-relaxed group/item">
+                      <span className={`shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-xs font-medium mt-0.5 ${
+                        idx === 0 ? 'bg-blue-100 text-blue-600' :
+                        idx === 1 ? 'bg-indigo-100 text-indigo-600' :
+                        idx === 2 ? 'bg-slate-200 text-slate-600' :
+                        'bg-amber-100 text-amber-600'
+                      }`}>
+                        {i + 1}
+                      </span>
+                      <span className="group-hover/item:text-slate-900 transition-colors">{item}</span>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -378,7 +416,7 @@ const StepCard = ({ number, title, tasks, materials, note, trainingDetails, cont
         <div className="mt-8 pt-8 border-t border-slate-100/50">
           <h4 className="font-bold text-slate-400 text-xs uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
             <div className="w-1 h-3 bg-indigo-500 rounded-full" />
-            关联材料 / Materials
+            关联材料与工具 / Materials & Tools
           </h4>
           <div className="flex flex-wrap gap-2">
             {materials.map((m: string, i: number) => (
@@ -528,6 +566,52 @@ const HotelDataCard = ({ name, type, metrics, color, feedback }: any) => (
 );
 
 export default function App() {
+  const [showStepNav, setShowStepNav] = useState(false);
+
+  useEffect(() => {
+    // 监听Step 2-8，当任一进入视口时显示导航
+    const stepIds = ['step-2', 'step-3', 'step-4', 'step-5', 'step-6', 'step-7', 'step-8'];
+    
+    const showObserver = new IntersectionObserver(
+      (entries) => {
+        const isAnyStepVisible = entries.some((entry) => entry.isIntersecting);
+        if (isAnyStepVisible) {
+          setShowStepNav(true);
+        }
+      },
+      { rootMargin: '-10% 0px -10% 0px' }
+    );
+
+    stepIds.forEach((id) => {
+      const section = document.getElementById(id);
+      if (section) {
+        showObserver.observe(section);
+      }
+    });
+
+    // 监听Step 1，当它进入视口时隐藏导航
+    const hideObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.target.id === 'step-1' && entry.isIntersecting) {
+            setShowStepNav(false);
+          }
+        });
+      },
+      { rootMargin: '-10% 0px -10% 0px' }
+    );
+
+    const step1Section = document.getElementById('step-1');
+    if (step1Section) {
+      hideObserver.observe(step1Section);
+    }
+
+    return () => {
+      showObserver.disconnect();
+      hideObserver.disconnect();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-100 text-base">
       {/* Hero Section */}
@@ -645,29 +729,64 @@ export default function App() {
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-cyan-200/20 rounded-full translate-y-1/3 -translate-x-1/3 blur-3xl" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-emerald-200/10 rounded-full blur-3xl" />
             
-            <h3 className="text-2xl md:text-3xl font-extrabold mb-10 flex items-center gap-3 relative z-10 text-slate-800">
+            <h3 className="text-2xl md:text-3xl font-extrabold mb-4 flex items-center gap-3 relative z-10 text-slate-800">
               <div className="w-12 h-12 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg shadow-teal-200">
                 <Zap className="text-white" size={24} />
               </div>
-              <span>产品概念</span>
+              <span>什么是"黄小西"酒店智能体</span>
             </h3>
+            
+            <p className="text-slate-600 text-lg mb-10 relative z-10">
+              帮助每一个酒店老板用最短时间、最低成本跟进AI潮流的酒店智慧化转型工具
+            </p>
             
             <div className="grid md:grid-cols-3 gap-6 relative z-10">
               <div className="bg-white rounded-2xl p-7 shadow-md border border-teal-100 hover:shadow-xl hover:-translate-y-1 transition-all">
                 <div className="w-10 h-10 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-lg mb-5 shadow-lg shadow-teal-200">1</div>
-                <p className="text-base leading-relaxed text-slate-700">是AI时代下酒店的<span className="text-teal-600 font-semibold">智能化转型工具</span>，是酒店的<span className="text-teal-600 font-semibold">24小时数字员工</span>。</p>
+                <p className="text-base leading-relaxed text-slate-700">是<span className="text-emerald-600 font-semibold">服务好住客</span>的AI工具，为酒店配备24小时服务的智能体团队</p>
               </div>
               
               <div className="bg-white rounded-2xl p-7 shadow-md border border-teal-100 hover:shadow-xl hover:-translate-y-1 transition-all">
                 <div className="w-10 h-10 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-lg mb-5 shadow-lg shadow-teal-200">2</div>
-                <p className="text-base leading-relaxed text-slate-700">是酒店私域的<span className="text-teal-600 font-semibold">豆包</span>，是旅客的<span className="text-teal-600 font-semibold">24小时数字客服</span>。</p>
+                <p className="text-base leading-relaxed text-slate-700">是<span className="text-emerald-600 font-semibold">管理好酒店</span>的AI工具，为酒店配备24小时的数字员工</p>
               </div>
               
               <div className="bg-white rounded-2xl p-7 shadow-md border border-teal-100 hover:shadow-xl hover:-translate-y-1 transition-all">
                 <div className="w-10 h-10 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-lg mb-5 shadow-lg shadow-teal-200">3</div>
-                <p className="text-base leading-relaxed text-slate-700">是让酒店<span className="text-teal-600 font-semibold">更加赚钱</span>的工具。</p>
+                <p className="text-base leading-relaxed text-slate-700">是<span className="text-emerald-600 font-semibold">更赚钱</span>的AI工具，为酒店提供AI时代的流量入口</p>
               </div>
             </div>
+            
+            <div className="bg-white rounded-2xl p-7 shadow-md border border-teal-100 hover:shadow-xl transition-all mt-6 relative z-10">
+              <div className="space-y-4">
+                <p className="text-base leading-relaxed text-slate-700">
+                  <strong className="text-slate-900">和OTA平台、传统软件的区别：</strong>酒店智能体是基于全球顶尖大语言模型和贵州省旅游行业大模型打造的多智能体服务工具
+                </p>
+                <div className="space-y-4">
+                  <div className="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:bg-white hover:border-blue-200 transition-colors">
+                    <p className="text-base leading-relaxed text-slate-700">
+                      <span className="text-red-500 font-semibold">不是</span> OTA 线上订房渠道，<span className="text-emerald-600 font-semibold">是</span> 酒店自主掌控的私域流量阵地
+                    </p>
+                  </div>
+                  <div className="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:bg-white hover:border-blue-200 transition-colors">
+                    <p className="text-base leading-relaxed text-slate-700">
+                      <span className="text-red-500 font-semibold">不是</span> 被动展示的信息入口，<span className="text-emerald-600 font-semibold">是</span> 能交互、会服务、可运营的数字员工
+                    </p>
+                  </div>
+                  <div className="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:bg-white hover:border-blue-200 transition-colors">
+                    <p className="text-base leading-relaxed text-slate-700">
+                      <span className="text-red-500 font-semibold">不是</span> 只做管控的传统系统，<span className="text-emerald-600 font-semibold">是</span> 直面宾客、赋能员工、助力老板的全域智能服务体
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mb-16">
+            <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-8 tracking-tight">
+              产品介绍
+            </h3>
           </div>
 
           <div className="space-y-12 mb-32">
@@ -704,7 +823,7 @@ export default function App() {
               },
               { 
                 icon: Monitor, 
-                title: "PC管理端", 
+                title: "酒店智能体管理后台", 
                 color: "slate", 
                 isPhone: false,
                 tabs: [
@@ -713,26 +832,10 @@ export default function App() {
                     audience: "酒店管理人员、酒店老板",
                     modules: [
                       { name: "管理中心", content: "集成客房工单处置、吐槽内容反馈、行李寄存、订单扫码核销等功能，实现酒店员工便捷办公" },
-                      { name: "业务管控", content: "集中处理订房订单与客房服务工单，及时反馈用户吐槽。" },
-                      { name: "运营支撑", content: "组织架构与系统权限配置、自营商品管理，提供从客房到商品的全流程管理支撑。" }
-                    ]
-                  },
-                  {
-                    title: "商品管理平台",
-                    audience: "渠道商、供应商",
-                    modules: [
-                      { name: "定位", content: "面向酒店商户（渠道商）和供应商，集商品管理、店铺运营、订单处理于一体的综合销售平台。" },
-                      { name: "渠道商", content: "支持酒店智能体入驻并完善信息；可自主上架商品至自营商城，或从平台商品池选品入库；支持装修自营及平台商城首页；可查看并处理交易订单。" },
-                      { name: "供应商", content: "拥有渠道商的所有功能，并额外支持将商品推送至供应链平台。" }
-                    ]
-                  },
-                  {
-                    title: "供应链管理平台",
-                    audience: "供应链平台运营人员",
-                    modules: [
-                      { name: "资质联审", content: "负责全平台商户入驻资质审核，把控供应链安全与品质。" },
-                      { name: "货架管理", content: "筛选供应商推送商品并上架至商品池，供下游渠道商一键入库。" },
-                      { name: "订单详情", content: "实时监控并查看供应链平台的全局商品交易订单详情与结算状态。" }
+                      { name: "订房订单管理", content: "集中处理房态房价、订房订单" },
+                      { name: "权限管理", content: "组织架构与系统权限配置" },
+                      { name: "自营商城", content: "酒店可自主装修自营商城首页，并自行上架商品，打造专属线上销售渠道。" },
+                      { name: "平台商城", content: "酒店可作为平台供应商，装修平台商城首页并自主上架商品，面向其他酒店开放采购，赚取更多收入。" }
                     ]
                   }
                 ]
@@ -853,233 +956,11 @@ export default function App() {
           </div>
         </section>
 
-        {/* --- PART 2 --- */}
-        <section id="part2">
-          <div className="flex items-center gap-4 mb-20">
-            <div className="h-px flex-1 bg-slate-200" />
-            <h2 className="text-sm font-bold tracking-[0.2em] text-slate-400 uppercase">第二部分 / 运营流程标准 (SOP)</h2>
-            <div className="h-px flex-1 bg-slate-200" />
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-8 mb-24">
-            <div className="lg:col-span-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white p-10 rounded-3xl shadow-lg">
-              <h3 className="text-2xl md:text-3xl font-bold mb-8 tracking-tight">目标与范围</h3>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                  <h4 className="text-blue-100 text-sm font-semibold uppercase tracking-wider mb-3 font-mono">目标 / Goal</h4>
-                  <p className="text-white leading-relaxed text-base">
-                    规范酒店智能体从市场拓展到持续运营的全生命周期管理流程，明确运营角色的职责、协作节点与交付标准，提升酒店合作签约率、部署效率、客户满意度及长期续签率。
-                  </p>
-                </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                  <h4 className="text-blue-100 text-sm font-semibold uppercase tracking-wider mb-3 font-mono">适用范围 / Scope</h4>
-                  <p className="text-white leading-relaxed text-base">
-                    本流程适用于公司内部所有参与酒店智能体服务的人员。
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-
-          </div>
-
-          <div id="roadmap">
-            <SectionTitle subtitle="标准化实施步骤">全流程落地图谱</SectionTitle>
-          </div>
-          
-          <div className="max-w-5xl mx-auto">
-            <div className="mb-10 flex items-center gap-4">
-              <div className="px-4 py-1 bg-blue-600 text-white text-[10px] font-bold rounded-full uppercase tracking-widest shadow-sm">Phase 01: 商务导入</div>
-              <div className="h-px flex-1 bg-slate-100" />
-            </div>
-            <StepCard 
-              number="1"
-              title="获客与建联"
-              tasks={[
-                { name: "信息来源渠道", content: "政府部门: 对接文旅/公安/商务公开名录, 通过宣贯宣讲直接触达;\n渠道方: 与航信、紫楠、各行业协会合作批量获取名单;\n旅行社: 获取本地存量合作酒店资源。" },
-                { name: "联系见面动作", content: "通过话术传递80%高频咨询承接、50%效率提升核心价值;\n预约拜访: 避开酒店高峰(8-10点、12-14点),准备折页/PPT/案例数据;\n前置铺垫: 发送同类酒店成功案例增强信任。" }
-              ]}
-              goals={[
-                "多渠道获取精准酒店客户名单，扩大潜在客户覆盖面",
-                "建立初步联系，传递产品价值，激发客户兴趣，获取见面机会",
-                "确认有效拜访时间，确保准备充分，提升见面成功率",
-                "通过案例增强客户信任，为拜访铺垫，提升合作意愿"
-              ]}
-              materials={[
-                "《黄小西酒店智能体推广销售话术》",
-                "《酒店智能体宣传折页》",
-                "酒店智能体宣传介绍 PPT",
-                "产品介绍网页",
-                "公众号：'黄小西'酒店智能体"
-              ]}
-              contact="材料联系人：运营中心 宋橙铭"
-            />
-
-            <StepCard 
-              number="2"
-              title="上门演示与签约"
-              tasks={[
-                { name: "演示准备", content: "准备调试好的笔记本、宣传材料、运营数据网页及电子/纸质协议模板。" },
-                { name: "现场宣贯与签约", content: "按“痛点→演示→数据→条款”顺序讲解;\n签约前明确对接人(前厅/店长)与决策人(老板/投资人);\n签署合同及拍照存档,记录三方联系方式。" }
-              ]}
-              goals={[
-                "通过针对性演示和案例数据消除疑虑, 促成半年免费使用期协议签署"
-              ]}
-              materials={[
-                "电子协议模板（PDF 版）",
-                "纸质备用协议"
-              ]}
-              contact="材料联系人：运营中心 周洋"
-            />
-
-            <div className="mb-10 mt-6 flex items-center gap-4">
-              <div className="px-4 py-1 bg-indigo-600 text-white text-[10px] font-bold rounded-full uppercase tracking-widest shadow-sm">Phase 02: 部署上线</div>
-              <div className="h-px flex-1 bg-slate-100" />
-            </div>
-
-            <StepCard 
-              number="3"
-              title="签约后酒店入驻"
-              tasks={[
-                { name: "注册", content: "辅助酒店扫码完成系统入驻注册；\n录入酒店基础信息、推荐人、营业执照等资料；\n记录对接人及决策人联系方式，并分配账号权限。" },
-                { name: "拉群", content: "创建微信群（群名：'XX酒店智能体服务群'）；\n拉群成员：运营人员、客服、酒店对接人。" },
-                { name: "建立客户档案", content: "每一步客户服务流程完成后，在指定系统中同步更新客户档案内容。" },
-                { name: "收集知识库", content: "补充整理知识库，在指定系统中更新知识库状态。" }
-              ]}
-              goals={[
-                "建立结构化客户档案，确保运营流程按既定步骤落实"
-              ]}
-              materials={[
-                "指定系统"
-              ]}
-            />
-
-            <StepCard 
-              number="4"
-              title="物料确认"
-              tasks={[
-                { name: "需求确认", content: "了解酒店物料摆放需求，确认物料数量及规格, 对接物料组，开始物料制作。" },
-                { name: "物料跟踪", content: "跟踪物料制作及邮寄进度，方便预约酒店时间。" }
-              ]}
-              goals={[
-                "明确规格与设计要求，避免返工; 把控质量确保客户确认无误"
-              ]}
-              materials={[
-                "指定系统"
-              ]}
-              note={`完善知识库后，记得在指定系统中更新状态，选择好物料类型，物料组根据知识库状态制作物料。`}
-              contact="物料组联系人：熊薇、熊欢平"
-            />
-
-            <StepCard 
-              number="5"
-              title="系统测试"
-              tasks={[
-                { name: "系统测试", content: "确认AI问答无误; " },
-                { name: "对接验收", content: "与对接人共同验证功能完整性、问答准确性,交付酒店验收通过。生成酒店及房间专属二维码。" }
-              ]}
-              goals={[
-                "确认系统功能正常，确保酒店验收通过，交付质量达标"
-              ]}
-            />
-
-            <StepCard 
-              number="6"
-              title="物料部署与员工培训"
-              tasks={[
-                { name: "物料检查", content: "若物料邮寄至酒店，预约到店时间检查物料并同步开展培训；若邮寄至服务人员处，先检查印刷质量，再请酒店对接人确认效果，避免二次修改。最后预约到店培训并完成物料部署。" },
-                { name: "物料部署", content: "预约非高峰期, 易拉宝和前台二维码放置于前台旁/大堂显目处, 房间桌牌二维码朝向客人视线方向, 拍照确认。" }
-              ]}
-              goals={[
-                "确保物料正确摆放提升可见度, 员工熟练操作减少使用障碍, 接入供应链开启增收"
-              ]}
-              materials={[
-                "指定系统"
-              ]}
-              trainingDetails={[
-                {
-                  title: "一、C端小程序：住客端",
-                  items: [
-                    "扫码进入、授权手机号、绑定房间",
-                    "智能问答 (Wi-Fi、早餐、设施等)",
-                    "服务工单 (送物、清洁、洗衣、开夜床)",
-                    "行程规划与周边推荐",
-                    "商城购物 (门票、线路、白酒)",
-                    "订单进度与退款查询"
-                  ]
-                },
-                {
-                  title: "二、管理端小程序：员工端",
-                  items: [
-                    "登录与权限管理",
-                    "客房服务工单实时处理",
-                    "行李寄存登记与核销"
-                  ]
-                },
-                {
-                  title: "三、Web后台：管理员端",
-                  items: [
-                    "酒店信息及知识库更新",
-                    "商城上架与库存价格调整",
-                    "财务账单与核销记录统计",
-                    "工单时长分析与员工权限管理"
-                  ]
-                },
-                {
-                  title: "四、常见问题处理",
-                  items: [
-                    "物料未送达或损坏处理",
-                    "门票核销失败响应机制",
-                    "白酒发货破损责任划分",
-                    "知识库答案纠错流程"
-                  ]
-                }
-              ]}
-            />
-
-            <div className="mb-10 mt-6 flex items-center gap-4">
-              <div className="px-4 py-1 bg-slate-800 text-white text-[10px] font-bold rounded-full uppercase tracking-widest shadow-sm">Phase 03: 持续运营</div>
-              <div className="h-px flex-1 bg-slate-100" />
-            </div>
-
-            <StepCard 
-              number="7"
-              title="日常维护与运营"
-              tasks={[
-                { name: "日常沟通", content: "日常及节假日问候、新功能分享，每周至少2次与老板了解使用情况，每月至少2次上门回访，每次可带上使用数据、增值服务使用案例。" },
-                { name: "需求处理", content: "记录并跟踪酒店需求，跟进产品接收及上线时间。" },
-                { name: "公众号推送", content: "通过内容推送保持客户活跃度，传递产品价值与更新信息。" }
-              ]}
-              goals={[
-                "实时跟踪运营数据降低流失风险, 通过高频内容推送与维系提升客户粘性"
-              ]}
-            />
-
-            <StepCard 
-              number="8"
-              title="续费支持与交接"
-              tasks={[
-                { name: "续费数据准备", content: "到期前1月生成《年度数据报告》, 重点展示月度问答量、工单闭环率等量化指标。" },
-                { name: "续费沟通激励", content: "讲解增值服务及激励政策(年付折扣), 锁定长期续签。" },
-                { name: "续签后动作", content: "24小时内更新系统合作期限与服务内容, 同步周知客服组。" }
-              ]}
-              goals={[
-                "量化合作成果增强续费意愿, 推动续签锁定长期关系, 保障服务连续性"
-              ]}
-            />
-
-
-          </div>
-        </section>
-
-        {/* Spacer */}
-        <div className="h-32" />
-
-        {/* --- PART 3 --- */}
+        {/* --- PART 3 (Swapped) --- */}
         <section id="part3" className="mb-40">
           <div className="flex items-center gap-4 mb-20">
             <div className="h-px flex-1 bg-slate-200" />
-            <h2 className="text-sm font-bold tracking-[0.2em] text-slate-400 uppercase">第三部分 / 考核指标</h2>
+            <h2 className="text-sm font-bold tracking-[0.2em] text-slate-400 uppercase">第二部分 / 考核指标</h2>
             <div className="h-px flex-1 bg-slate-200" />
           </div>
 
@@ -1131,7 +1012,304 @@ export default function App() {
             </motion.div>
           </div>
         </section>
+
+        {/* Spacer */}
+        <div className="h-32" />
+
+        {/* --- PART 2 (Swapped) --- */}
+        <section id="part2">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="h-px flex-1 bg-slate-200" />
+            <h2 className="text-sm font-bold tracking-[0.2em] text-slate-400 uppercase">第三部分 / 运营流程标准 (SOP)</h2>
+            <div className="h-px flex-1 bg-slate-200" />
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8 mb-24">
+            <div className="lg:col-span-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white p-10 rounded-3xl shadow-lg">
+              <h3 className="text-2xl md:text-3xl font-bold mb-8 tracking-tight">目标与范围</h3>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                  <h4 className="text-blue-100 text-sm font-semibold uppercase tracking-wider mb-3 font-mono">目标 / Goal</h4>
+                  <p className="text-white leading-relaxed text-base">
+                    规范酒店智能体从市场拓展到持续运营的全生命周期管理流程，明确运营角色的职责、协作节点与交付标准，提升酒店合作签约率、部署效率、客户满意度及长期续签率。
+                  </p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                  <h4 className="text-blue-100 text-sm font-semibold uppercase tracking-wider mb-3 font-mono">适用范围 / Scope</h4>
+                  <p className="text-white leading-relaxed text-base">
+                    本流程适用于公司内部所有参与酒店智能体服务的人员。
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+
+          </div>
+
+          <div id="roadmap">
+            <SectionTitle subtitle="标准化实施步骤">全流程落地图谱</SectionTitle>
+          </div>
+          
+          {/* 步骤快速导航 - 右侧固定 */}
+          {showStepNav && (
+            <div className="fixed right-4 top-1/2 -translate-y-1/2 z-40">
+              <div className="bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl shadow-xl p-3 w-48">
+                <div className="flex flex-col gap-1.5">
+                  {[
+                    { id: 'step-1', label: 'Step 1', title: '获客与建联' },
+                    { id: 'step-2', label: 'Step 2', title: '上门演示与签约' },
+                    { id: 'step-3', label: 'Step 3', title: '签约后酒店入驻' },
+                    { id: 'step-4', label: 'Step 4', title: '物料确认' },
+                    { id: 'step-5', label: 'Step 5', title: '系统测试' },
+                    { id: 'step-6', label: 'Step 6', title: '物料部署与员工培训' },
+                    { id: 'step-7', label: 'Step 7', title: '日常维护与运营' },
+                    { id: 'step-8', label: 'Step 8', title: '续费支持与交接' }
+                  ].map((step) => (
+                    <button
+                      key={step.id}
+                      onClick={() => {
+                        const element = document.getElementById(step.id);
+                        if (element) {
+                          const offset = 120;
+                          const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+                          window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' });
+                        }
+                      }}
+                      className="group flex items-center gap-2 px-2.5 py-2 bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 rounded-xl transition-all duration-200 cursor-pointer"
+                    >
+                      <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-600 text-[10px] font-bold flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors shrink-0">
+                        {step.label.replace('Step ', '')}
+                      </span>
+                      <span className="text-xs font-medium text-slate-600 group-hover:text-blue-700 transition-colors truncate">{step.title}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+          
+          <div className="max-w-5xl mx-auto">
+            <div className="mb-10 flex items-center gap-4">
+              <div className="px-4 py-1 bg-blue-600 text-white text-[10px] font-bold rounded-full uppercase tracking-widest shadow-sm">Phase 01: 商务导入</div>
+              <div className="h-px flex-1 bg-slate-100" />
+            </div>
+            <StepCard 
+              number="1"
+              title="获客与建联"
+              tasks={[
+                { name: "信息来源渠道", content: "政府部门: 对接文旅/公安/商务公开名录, 通过宣贯宣讲直接触达;\n渠道方: 与航信、紫楠、各行业协会合作批量获取名单;\n旅行社: 获取本地存量合作酒店资源。" },
+                { name: "联系见面动作", content: "简要介绍：清晰传递智能体的服务价值，说明可帮助酒店承接高频咨询、提升运营效率等效果，让对方快速了解核心优势。\n\n拜访安排：预约上门尽量避开酒店的高峰时段，并准备好折页、PPT等宣传物料。\n\n前置铺垫：正式拜访前向对方发送官网、公众号帮助对方提前建立认知。" }
+              ]}
+              goals={[
+                "多渠道获取精准酒店客户名单，扩大潜在客户覆盖面",
+                "建立初步联系，传递产品价值，激发客户兴趣，获取见面机会",
+                "确认有效拜访时间，确保准备充分，提升见面成功率",
+                "通过案例增强客户信任，为拜访铺垫，提升合作意愿"
+              ]}
+              materials={[
+                "《黄小西酒店智能体推广销售话术》",
+                "《酒店智能体宣传折页》",
+                "酒店智能体宣传介绍 PPT",
+                "产品介绍网页",
+                "公众号：'黄小西'酒店智能体"
+              ]}
+              contact="材料联系人：运营中心 宋橙铭"
+            />
+
+            <StepCard 
+              number="2"
+              title="上门演示与签约"
+              tasks={[
+                { name: "演示准备", content: "准备调试好的笔记本、宣传材料、运营数据网页及电子/纸质协议模板。" },
+                { name: "现场宣贯与签约", content: "1.明确对接人为老板、投资人、经理、店长等有决策权的酒店人员;\n2.为酒店对接人详细介绍酒店智能体并可进行演示;\n3.达成签约，完成合同签署并拍照存档，同时完整记录酒店对接人联系方式。" }
+              ]}
+              goals={[
+                "通过针对性演示和案例数据消除疑虑, 促成半年免费使用期协议签署"
+              ]}
+              materials={[
+                "电子协议模板（PDF 版）",
+                "纸质备用协议"
+              ]}
+              contact="材料联系人：运营中心 周洋"
+            />
+
+            <div className="mb-10 mt-6 flex items-center gap-4">
+              <div className="px-4 py-1 bg-indigo-600 text-white text-[10px] font-bold rounded-full uppercase tracking-widest shadow-sm">Phase 02: 部署上线</div>
+              <div className="h-px flex-1 bg-slate-100" />
+            </div>
+
+            <StepCard 
+              number="3"
+              title="签约后酒店入驻"
+              tasks={[
+                { name: "注册", content: "辅助酒店扫码完成系统入驻注册；\n录入酒店基础信息、推荐人、营业执照等资料；\n记录对接人及决策人联系方式，并分配账号权限。" },
+                { name: "拉群", content: "创建微信群(群名:'XX酒店智能体服务群');\n群内成员须包括:酒店服务人员、酒店智能体客服、酒店对接人。" },
+                { name: "建立客户档案", content: "每一步客户服务流程完成后，在指定系统中同步更新客户档案内容。" },
+                { name: "收集知识库", content: "完成知识库录入，在指定系统中更新知识库状态。" }
+              ]}
+              goals={[
+                "建立结构化客户档案，确保运营流程按既定步骤落实"
+              ]}
+              materials={[
+                "指定系统",
+                "酒店管理端"
+              ]}
+              contact="客服组联系人：熊薇、叶子"
+            />
+
+            <StepCard 
+              number="4"
+              title="物料确认"
+              tasks={[
+                { name: "需求确认", content: "了解酒店物料摆放需求，确认物料风格版本、数量及规格，并在指定系统中更新酒店状态，如知识库已收集完成。" },
+                { name: "物料跟踪", content: "跟踪物料制作及邮寄进度，方便预约酒店时间。" }
+              ]}
+              goals={[
+                "明确规格与设计要求，避免返工; 把控质量确保客户确认无误"
+              ]}
+              materials={[
+                "指定系统"
+              ]}
+              note={`完善知识库后，记得在指定系统中更新状态，选择好物料类型，物料组根据知识库状态制作物料。`}
+              contact="物料组联系人：熊薇、熊欢平"
+            />
+
+            <StepCard 
+              number="5"
+              title="系统测试"
+              tasks={[
+                { name: "系统测试", content: "确认AI问答无误、客房服务可正常发起、周边推荐可正常展示、吐槽评价可正常使用等。" },
+                { name: "对接验收", content: "与对接人共同验证功能完整性、问答准确性,交付酒店验收通过。生成酒店及房间专属二维码。" }
+              ]}
+              goals={[
+                "确认系统功能正常，确保酒店验收通过，交付质量达标"
+              ]}
+              note="如有BUG需要修复，请在“酒店上线运维群”中联系技术人员。"
+              contact="酒店上线运维群联系人：马文、王园"
+            />
+
+            <StepCard 
+              number="6"
+              title="物料部署与员工培训"
+              tasks={[]}
+              materialTasks={[
+                { name: "物料检查与时间预约", content: "若物料邮寄至酒店，预约到店时间检查物料并同步开展培训；若邮寄至服务人员处，先检查印刷质量，再请酒店对接人确认效果，避免二次修改。最后预约到店培训并完成物料部署。" },
+                { name: "现场部署", content: "易拉宝和前台二维码放置于前台旁/大堂显目处，房间桌牌二维码朝向客人视线方向，拍照留底。" }
+              ]}
+              goals={[
+                "确保物料正确摆放提升可见度, 员工熟练操作减少使用障碍, 接入供应链开启增收"
+              ]}
+              materials={[
+                "指定系统"
+              ]}
+              trainingDetails={[
+                {
+                  title: "一、住客端小程序",
+                  items: [
+                    "扫码进入、授权手机号、绑定房间",
+                    "智能问答 (Wi-Fi、早餐、设施等)",
+                    "服务工单 (送物、清洁、洗衣、开夜床)",
+                    "行程规划与周边推荐",
+                    "商城购物 (门票、线路、白酒)",
+                    "订单进度与退款查询"
+                  ]
+                },
+                {
+                  title: "二、手机管理端小程序",
+                  items: [
+                    "登录与权限管理",
+                    "客房服务工单实时处理",
+                    "行李寄存登记与核销"
+                  ]
+                },
+                {
+                  title: "三、酒店智能体管理后台",
+                  items: [
+                    "酒店信息及知识库更新",
+                    "商城上架与库存价格调整",
+                    "财务账单与核销记录统计",
+                    "工单时长分析与员工权限管理"
+                  ]
+                },
+                {
+                  title: "四、常见问题处理",
+                  items: [
+                    "物料未送达或损坏处理",
+                    "门票核销失败响应机制",
+                    "白酒发货破损责任划分",
+                    "知识库答案纠错流程"
+                  ]
+                }
+              ]}
+            />
+
+            <div className="mb-10 mt-6 flex items-center gap-4">
+              <div className="px-4 py-1 bg-slate-800 text-white text-[10px] font-bold rounded-full uppercase tracking-widest shadow-sm">Phase 03: 持续运营</div>
+              <div className="h-px flex-1 bg-slate-100" />
+            </div>
+
+            <StepCard 
+              number="7"
+              title="日常维护与运营"
+              tasks={[
+                { name: "日常沟通", content: "日常及节假日问候、新功能分享，每周至少2次与老板了解使用情况，每月至少2次上门回访，每次可带上使用数据、增值服务使用案例。" },
+                { name: "跟进产品需求", content: "记录并跟踪酒店需求，跟进产品接收及上线时间。" },
+                { name: "公众号推送", content: "通过内容推送保持客户活跃度，传递产品价值与更新信息。" }
+              ]}
+              goals={[
+                "实时跟踪运营数据降低流失风险, 通过高频内容推送与维系提升客户粘性"
+              ]}
+            />
+
+            <StepCard 
+              number="8"
+              title="续费支持与交接"
+              tasks={[
+                { name: "续费数据准备", content: "到期前1月生成《年度数据报告》, 重点展示月度问答量、工单闭环率等量化指标。" },
+                { name: "续费沟通激励", content: "讲解增值服务及激励政策(年付折扣), 锁定长期续签。" },
+                { name: "续签后动作", content: "24小时内更新系统合作期限与服务内容，同步更新指定系统。" }
+              ]}
+              goals={[
+                "量化合作成果增强续费意愿, 推动续签锁定长期关系, 保障服务连续性"
+              ]}
+            />
+
+
+          </div>
+        </section>
+
       </main>
+
+      {/* 合作步骤 - 页面底部 */}
+      <section id="cooperation-steps" className="py-20 bg-slate-50 border-t border-slate-100">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-8 tracking-tight">
+              合作步骤
+            </h3>
+            
+            <div className="flex flex-wrap justify-center items-center gap-6">
+              {[
+                "签订协议", "指定对接人", "建立服务群", "完成注册", "部署物料", "员工培训", "正式启用"
+              ].map((step, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="flex flex-col items-center gap-4"
+                >
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-white flex items-center justify-center font-bold shadow-xl shadow-blue-200/60 border-2 border-white">
+                    {idx + 1}
+                  </div>
+                  <span className="text-slate-700 text-base font-semibold">{step}</span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="bg-slate-900 text-white py-12 border-t border-white/5">
