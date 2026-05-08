@@ -74,7 +74,7 @@ const PhoneMockup = ({ color = "blue", imageSrc = "./0.1.jpg" }: { color?: strin
 
 const TabletMockup = ({ color = "slate", imageSrc = "./0.3.jpg" }: { color?: string; imageSrc?: string }) => {
   const [currentImage, setCurrentImage] = React.useState(0);
-  const images = [imageSrc, "./0.4.jpg"];
+  const images = [imageSrc, "./0.7.jpg"];
   
   React.useEffect(() => {
     const interval = setInterval(() => {
