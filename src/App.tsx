@@ -689,14 +689,14 @@ export default function App() {
                   <div className="w-10 h-10 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-teal-200 shrink-0">3</div>
                   <h4 className="text-lg font-bold text-slate-900">增加收入</h4>
                 </div>
-                <p className="text-base leading-relaxed text-slate-700">为酒店提供AI时代的流量入口</p>
+                <p className="text-base leading-relaxed text-slate-700">接入优质旅游产品和通盘供应链，增加非房收入</p>
               </div>
             </div>
             
             <div className="bg-white rounded-2xl p-7 shadow-md border border-teal-100 hover:shadow-xl transition-all mt-6 relative z-10">
               <div className="space-y-4">
                 <p className="text-base leading-relaxed text-slate-700">
-                  <strong className="text-slate-900">和OTA平台、传统软件的区别：</strong>酒店智能体是基于全球顶尖大语言模型和贵州省旅游行业大模型打造的多智能体服务工具
+                  <strong className="text-slate-900">和OTA平台、传统软件的区别：</strong>
                 </p>
                 <div className="space-y-4">
                   <div className="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:bg-white hover:border-blue-200 transition-colors">
@@ -711,7 +711,7 @@ export default function App() {
                   </div>
                   <div className="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:bg-white hover:border-blue-200 transition-colors">
                     <p className="text-base leading-relaxed text-slate-700">
-                      <span className="text-red-500 font-semibold">不是</span> 只做管控的传统系统，<span className="text-emerald-600 font-semibold">是</span> 直面宾客、赋能员工、助力老板的全域智能服务体
+                      <span className="text-red-500 font-semibold">不是</span> 只做管控的传统系统，<span className="text-emerald-600 font-semibold">是</span> 直面宾客、赋能员工、助力老板的全域智体能服务
                     </p>
                   </div>
                 </div>
@@ -805,7 +805,7 @@ export default function App() {
                   <h4 className="text-xl font-bold text-slate-900">一套新型运营方法</h4>
                 </div>
                 <p className="text-slate-600 text-base leading-relaxed">
-                  打造酒店专属智能门户，抢占AI时代入口；联动高德、阿里等平台及热门IP，构建引流矩阵。
+                  为酒店提供成熟供应链运营方案，激活住前、住中、住后全场景，自有商品+外部好货一键上架，让每间客房都成为智能卖场，打造酒店第二增长曲线。
                 </p>
               </div>
             </div>
@@ -1050,7 +1050,8 @@ export default function App() {
           {/* 步骤快速导航 - 右侧固定 */}
           {showStepNav && (
             <div className="fixed right-4 top-1/2 -translate-y-1/2 z-40">
-              <div className="bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl shadow-xl p-3 w-48">
+              {/* 电脑端：完整显示 */}
+              <div className="hidden md:block bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl shadow-xl p-3 w-48">
                 <div className="flex flex-col gap-1.5">
                   {[
                     { id: 'step-1', label: 'Step 1', title: '获客与建联' },
@@ -1081,6 +1082,35 @@ export default function App() {
                     </button>
                   ))}
                 </div>
+              </div>
+              {/* 手机端：紧凑数字按钮 */}
+              <div className="md:hidden flex flex-col gap-1 bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl shadow-lg p-1.5">
+                {[
+                  { id: 'step-1', num: '1' },
+                  { id: 'step-2', num: '2' },
+                  { id: 'step-3', num: '3' },
+                  { id: 'step-4', num: '4' },
+                  { id: 'step-5', num: '5' },
+                  { id: 'step-6', num: '6' },
+                  { id: 'step-7', num: '7' },
+                  { id: 'step-8', num: '8' }
+                ].map((step) => (
+                  <button
+                    key={step.id}
+                    onClick={() => {
+                      const element = document.getElementById(step.id);
+                      if (element) {
+                        const offset = 120;
+                        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+                        window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' });
+                      }
+                    }}
+                    className="w-8 h-8 flex items-center justify-center bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 rounded-lg transition-all duration-200 cursor-pointer"
+                    title={`Step ${step.num}`}
+                  >
+                    <span className="text-xs font-bold text-blue-600 group-hover:text-blue-700">{step.num}</span>
+                  </button>
+                ))}
               </div>
             </div>
           )}
