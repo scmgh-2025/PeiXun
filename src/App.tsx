@@ -208,6 +208,7 @@ const TableOfContents = () => {
     { id: 'background', label: '公司背景及"黄小西"IP', subtitle: '', indent: true },
     { id: 'product-intro', label: '产品介绍', subtitle: '', indent: true },
     { id: 'benefits', label: '三大核心赋能价值', subtitle: '', indent: true },
+    { id: 'cooperation-steps', label: '合作步骤', subtitle: '', isMain: true },
     { id: 'showcases', label: '部分成效展示', subtitle: '', indent: true },
     { id: 'part3', label: '第二部分 / 考核指标', subtitle: '', isMain: true },
     { id: 'part2', label: '第三部分 / 运营流程标准 (SOP)', subtitle: '', isMain: true },
@@ -219,7 +220,6 @@ const TableOfContents = () => {
     { id: 'step-6', label: 'Step 6', subtitle: '物料部署与员工培训', indent: true },
     { id: 'step-7', label: 'Step 7', subtitle: '日常维护与运营', indent: true },
     { id: 'step-8', label: 'Step 8', subtitle: '推动续费', indent: true },
-    { id: 'cooperation-steps', label: '合作步骤', subtitle: '', isMain: true },
   ];
 
   return null;
@@ -233,10 +233,10 @@ const HamburgerMenu = () => {
     { id: 'part1', label: '酒店智能体介绍' },
     { id: 'product-intro', label: '产品介绍' },
     { id: 'benefits', label: '三大核心赋能价值' },
+    { id: 'cooperation-steps', label: '合作步骤' },
     { id: 'showcases', label: '部分成效展示' },
     { id: 'part3', label: '考核指标' },
     { id: 'part2', label: '运营流程标准 (SOP)' },
-    { id: 'cooperation-steps', label: '合作步骤' },
   ];
 
   const scrollToSection = (id: string) => {
@@ -1282,8 +1282,8 @@ export default function App() {
               goals={[
                 "确认系统功能正常，确保酒店验收通过，交付质量达标"
               ]}
-              note="如有BUG需要修复,请在 酒店上线运维群 中联系产品原型组的同事"
-              contact="酒店上线运维群联系人:刘鑫、黄维维、刘锐奇、邓思匀"
+              note="如有BUG需要修复,请在 酒店上线运维群 中联系产品同事"
+              contact="酒店上线运维群联系人:李懿"
             />
 
             <StepCard 
