@@ -689,7 +689,7 @@ export default function App() {
                     <span className="font-bold text-slate-900 border-b-2 border-blue-100">贵旅数网科技公司</span> 由贵旅集团与华创云信联合发起成立。
                   </p>
                   <p>
-                    <span className="text-blue-600 font-semibold italic">● 贵旅集团：</span> 贵州省国资委监管国企，定位于“贵州旅游专业运营主体”，是全省文旅龙企业。
+                    <span className="text-blue-600 font-semibold italic">● 贵旅集团：</span> 是贵州省管大型国有全资公司，定位是“贵州旅游专业运营主体、贵州全域旅游集成服务商”，是全省文旅龙企业。
                   </p>
                   <p>
                     <span className="text-blue-600 font-semibold italic">● 华创云信：</span> 上交所上市科技金融公司，提供AI、区块链、大数据等核心技术支撑。
