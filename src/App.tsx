@@ -218,11 +218,78 @@ const TableOfContents = () => {
     { id: 'step-5', label: 'Step 5', subtitle: '系统测试', indent: true },
     { id: 'step-6', label: 'Step 6', subtitle: '物料部署与员工培训', indent: true },
     { id: 'step-7', label: 'Step 7', subtitle: '日常维护与运营', indent: true },
-    { id: 'step-8', label: 'Step 8', subtitle: '续费支持与交接', indent: true },
+    { id: 'step-8', label: 'Step 8', subtitle: '推动续费', indent: true },
     { id: 'cooperation-steps', label: '合作步骤', subtitle: '', isMain: true },
   ];
 
   return null;
+};
+
+// 汉堡菜单组件
+const HamburgerMenu = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const menuItems = [
+    { id: 'part1', label: '酒店智能体介绍' },
+    { id: 'product-intro', label: '产品介绍' },
+    { id: 'benefits', label: '三大核心赋能价值' },
+    { id: 'showcases', label: '部分成效展示' },
+    { id: 'part3', label: '考核指标' },
+    { id: 'part2', label: '运营流程标准 (SOP)' },
+    { id: 'cooperation-steps', label: '合作步骤' },
+  ];
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="fixed top-6 right-6 z-50">
+      {/* 汉堡按钮 */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-12 h-12 bg-blue-600 shadow-lg shadow-blue-600/30 rounded-xl flex items-center justify-center hover:bg-blue-700 hover:shadow-blue-700/40 transition-all duration-200"
+        aria-label="打开菜单"
+      >
+        <Menu className={`w-6 h-6 text-white transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`} />
+      </button>
+
+      {/* 菜单内容 */}
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -10, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -10, scale: 0.95 }}
+          transition={{ duration: 0.2 }}
+          className="absolute top-14 right-0 w-56 bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl shadow-xl py-4 px-2"
+        >
+          <div className="flex flex-col gap-1">
+            {menuItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="text-left px-4 py-3 rounded-xl text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </motion.div>
+      )}
+
+      {/* 点击外部关闭菜单 */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-[-1]"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+    </div>
+  );
 };
 
 const StepCard = ({ number, title, tasks, materials, note, trainingDetails, contact, materialTasks }: any) => (
@@ -569,6 +636,9 @@ export default function App() {
             }}
           />
         </div>
+        
+        {/* 汉堡菜单按钮 - 右上角 */}
+        <HamburgerMenu />
         
         <div className="relative z-10 text-center px-4 max-w-4xl">
           <motion.div
@@ -1061,7 +1131,7 @@ export default function App() {
                     { id: 'step-5', label: 'Step 5', title: '系统测试' },
                     { id: 'step-6', label: 'Step 6', title: '物料部署与员工培训' },
                     { id: 'step-7', label: 'Step 7', title: '日常维护与运营' },
-                    { id: 'step-8', label: 'Step 8', title: '续费支持与交接' }
+                    { id: 'step-8', label: '8', title: '推动续费' }
                   ].map((step) => (
                     <button
                       key={step.id}
@@ -1196,10 +1266,7 @@ export default function App() {
                 "明确规格与设计要求，避免返工; 把控质量确保客户确认无误"
               ]}
               materials={[
-                "指定系统",
-                "住客端小程序",
-                "手机管理端小程序",
-                "酒店智能体管理后台"
+                "指定系统"
               ]}
               note={`完善知识库后，记得在指定系统中更新状态，选择好物料类型，物料组根据知识库状态制作物料。`}
               contact="物料组联系人：熊薇、熊欢平"
@@ -1216,7 +1283,7 @@ export default function App() {
                 "确认系统功能正常，确保酒店验收通过，交付质量达标"
               ]}
               note="如有BUG需要修复,请在 酒店上线运维群 中联系产品原型组的同事"
-              contact="酒店上线运维群联系人:刘鑫、黄维维、刘锐奇、邓思韵"
+              contact="酒店上线运维群联系人:刘鑫、黄维维、刘锐奇、邓思匀"
             />
 
             <StepCard 
@@ -1297,11 +1364,11 @@ export default function App() {
 
             <StepCard 
               number="8"
-              title="续费支持与交接"
+              title="推动续费"
               tasks={[
                 { name: "续费数据准备", content: "到期前1月生成《年度数据报告》, 重点展示月度问答量、工单闭环率等量化指标。" },
                 { name: "续费沟通激励", content: "讲解增值服务及激励政策(年付折扣), 锁定长期续签。" },
-                { name: "续签后动作", content: "24小时内更新系统合作期限与服务内容，同步更新指定系统。" }
+                { name: "续签后动作", content: "24小时内更新系统合作期限与服务内容。" }
               ]}
               goals={[
                 "量化合作成果增强续费意愿, 推动续签锁定长期关系, 保障服务连续性"
